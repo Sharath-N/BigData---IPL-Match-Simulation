@@ -19,7 +19,7 @@ IPL match analysis using that data from all the IPL matches from the beginning t
 ---
 #### ALGORITHM/DESIGN 
  
-* *Phase 1*:  
+* *Step 1*:  
 The main dataset that we used for prediction was downloaded from https://cricsheet.org/  .
 We observed that many batsman-bowler combinations did not occur in the dataset which would cause inaccuracies during prediction. In order to face this situation, we performed clustering to group the batsmen and bowlers using their  statistics provided in the dataset. Hence when we encounter an unfaced combination, we predict the outcome based on the cluster they belong to. 
 This involved collecting the batting-averages and bowling-averages of all the players(i.e., the player profile) in IPL from 2008-2017. We wrote a web-scraping code in Python using BeautifulSoup for this purpose. The data was cleaned to meet our requirements and written to a csv file for easy handling. This csv file was loaded into HDFS. 
@@ -29,14 +29,14 @@ The parameters used for clustering bowlers – Wickets, Economy, Average, Strike
 
 ---
 
-* *Phase 2*: 
+* *Step 2*: 
 Once the clusters were obtained, we calculated cluster vs cluster statistics using the main dataset which had ball by ball outcome of all matches from 2008-2017. This was done by maintaining a dictionary of batsmen cluster vs bowler cluster parameter totals(0s,1s,2s,3s,4s,6s,wickets). Every time a new combination was encountered, we found the batsman cluster number and the bowler cluster number and added the parameters to the corresponding cluster combination. Finally probabilities of scoring 0s,1s,2s,3s,4s,6s,wickets were obtained for every cluster combination by dividing by the total number of balls.  
 A summary statistics file is also generated for every batsman-bowler combination encountered in the main dataset, which contains the probabilities of scoring 
 0s,1s,2s,3s,4s,6s and wickets, when that particular combination face each other. 
 We wrote a python code to simulate an entire IPL match using ball by ball prediction. To predict the outcome of a ball, we searched for the batsman-bowler combination in the summary statistics file. If not found, or is the batsman had faces less than 15 balls from that bowler we predicted the clusters for the combination and obtained the probabilities for the particular cluster combination. A list of cumulative probabilities is constructed from the probabilities obtained. A random is generated and the outcome is decided based on the range of cumulative probabilities in which it falls. The outcome could be 0,1,2,3,4,6 or a wicket. This is repeated for all balls until 20 overs are up or there are no wickets left. An additional way of a wicket falling is also added. 
 We write the outcome of every ball into a CSV file. We simulated 10 matches and calculated the averages. 
 ---
-* *Phase 3*: 
+* *Step 3*: 
 Here then we followed the method of using the decision trees. The outcome of the match was predicted using the decision trees.  
 Using the phase 2 statistics we use the data and we perform to predict the score again ball by ball.
 Using the Spark MLLIB which provides functions to train and construct Decision Tree models. 
