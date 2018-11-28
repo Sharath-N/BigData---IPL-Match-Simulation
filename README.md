@@ -10,6 +10,13 @@ IPL match analysis using that data from all the IPL matches from the beginning t
 2. Decision Tree Model (Teaching the tree with the recent data)
 
 ---
+### Software Dependencies
+* Apache Hadoop- HDFS
+* Apache Spark
+* Python 3 & Python 2
+* PySpark
+
+---
 #### ALGORITHM/DESIGN 
  
 * *Phase 1*:  
