@@ -1,6 +1,6 @@
 # BIG DATA - UE16CS313 - PES University
 
-## BigData FinalPoject---IPL-Match-Simulation
+## BigData FinalProject - IPL-Match-Simulation
 Simulating the IPL matches with the help of clustering and desicion tree by using the past IPL statistics of players.
 
 ### Introduction 
